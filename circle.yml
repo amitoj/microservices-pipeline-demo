@@ -1,0 +1,43 @@
+# encoding: UTF-8
+---
+machine:
+  services:
+    - docker
+  java:
+    version: oraclejdk8
+  environment:
+    UPSTREAM_PROJECT: blue-beluga/docker-microservices-demo
+general:
+  artifacts:
+    - account-service/target/account-service-0.0.1-SNAPSHOT.jar
+    - catalog-service/target/catalog-service-0.0.1-SNAPSHOT.jar
+    - config-service/target/config-service-0.0.1-SNAPSHOT.jar
+    - discovery-service/target/discovery-service-0.0.1-SNAPSHOT.jar
+    - edge-service/target/edge-service-0.0.1-SNAPSHOT.jar
+    - hystrix-dashboard/target/hystrix-dashboard-0.0.1-SNAPSHOT.jar
+    - inventory-service/target/inventory-service-0.0.1-SNAPSHOT.jar
+    - online-store-web/target/online-store-web-0.0.1-SNAPSHOT.jar
+    - order-service/target/order-service-0.0.1-SNAPSHOT.jar
+    - payment-service/target/payment-service-0.0.1-SNAPSHOT.jar
+    - shopping-cart-service/target/shopping-cart-service-0.0.1-SNAPSHOT.jar
+    - user-service/target/user-service-0.0.1-SNAPSHOT.jar
+test:
+  post:
+    - mvn clean install
+deployment:
+  hub:
+    branch: master
+    commands:
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASSWORD
+      - docker push bluebeluga/hystrix-dashboard
+      - docker push bluebeluga/shopping-cart-service
+      - docker push bluebeluga/edge-service
+      - docker push bluebeluga/catalog-service
+      - docker push bluebeluga/online-store-web
+      - docker push bluebeluga/discovery-service
+      - docker push bluebeluga/config-service
+      - docker push bluebeluga/payment-service
+      - docker push bluebeluga/user-service
+      - docker push bluebeluga/account-service
+      - docker push bluebeluga/order-service
+      - docker push bluebeluga/inventory-service
