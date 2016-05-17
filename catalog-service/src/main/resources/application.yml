@@ -41,6 +41,25 @@ eureka:
       defaultZone: http://discovery-service:8761/eureka/
 ---
 spring:
+  profiles: machine
+  redis:
+    host: ms-redis.central.local
+    port: 6379
+  datasource:
+    url: jdbc:mysql://ms-mysql.central.local:3306/dev?useSSL=false
+    username: root
+    password: dbpass
+    initialize: true
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://ms-discovery-service.central.local:8761/eureka/
+---
+spring:
   profiles: test
   redis:
     host: localhost

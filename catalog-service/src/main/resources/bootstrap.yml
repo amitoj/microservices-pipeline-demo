@@ -11,6 +11,12 @@ spring:
       uri: http://config-service:8888
 ---
 spring:
+  profiles: machine
+  cloud:
+    config:
+      uri: http://ms-config-service.central.local:8888
+---
+spring:
   profiles: default
   cloud:
     config:
